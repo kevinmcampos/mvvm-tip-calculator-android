@@ -7,4 +7,6 @@
     <string name="bill_amount">Check</string>
     <string name="tip_amount">Tip</string>
     <string name="grant_total">Total</string>
+
+    <string name="dollar_format">$%1$.02f</string>
 </resources>
