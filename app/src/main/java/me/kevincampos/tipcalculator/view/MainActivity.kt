@@ -1,12 +1,12 @@
 package me.kevincampos.tipcalculator.view
 
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-
 import kotlinx.android.synthetic.main.activity_main.*
 import me.kevincampos.tipcalculator.R
 import me.kevincampos.tipcalculator.databinding.ActivityMainBinding
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        dataBinding.vm = CalculatorViewModel(application)
+        dataBinding.vm = ViewModelProviders.of(this).get(CalculatorViewModel::class.java)
 
         setSupportActionBar(toolbar)
 

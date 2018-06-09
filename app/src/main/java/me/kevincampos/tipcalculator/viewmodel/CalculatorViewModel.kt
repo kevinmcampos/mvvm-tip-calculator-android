@@ -1,16 +1,15 @@
 package me.kevincampos.tipcalculator.viewmodel
 
 import android.app.Application
-import android.databinding.BaseObservable
 import me.kevincampos.tipcalculator.R
 import me.kevincampos.tipcalculator.model.Calculator
 import me.kevincampos.tipcalculator.model.RestaurantCalculator
 import me.kevincampos.tipcalculator.model.TipCalculation
 
-class CalculatorViewModel(
-        private val application: Application,
+class CalculatorViewModel @JvmOverloads constructor(
+        application: Application,
         private val calculator: Calculator = RestaurantCalculator()
-) : BaseObservable() {
+) : ObservableViewModel(application) {
 
     var inputCheckAmount = ""
     var inputTipPercentage = ""
@@ -24,9 +23,9 @@ class CalculatorViewModel(
     }
 
     private fun updateOutputs(tipCalculation: TipCalculation) {
-        outputCheckAmount = application.getString(R.string.dollar_format, tipCalculation.checkAmount)
-        outputTipAmount = application.getString(R.string.dollar_format, tipCalculation.tipAmount)
-        outputTotalAmount = application.getString(R.string.dollar_format, tipCalculation.grandTotal)
+        outputCheckAmount = getApplication<Application>().getString(R.string.dollar_format, tipCalculation.checkAmount)
+        outputTipAmount = getApplication<Application>().getString(R.string.dollar_format, tipCalculation.tipAmount)
+        outputTotalAmount = getApplication<Application>().getString(R.string.dollar_format, tipCalculation.grandTotal)
     }
 
     fun calculateTip() {
