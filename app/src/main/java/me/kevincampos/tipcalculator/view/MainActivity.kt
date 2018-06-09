@@ -1,4 +1,4 @@
-package me.kevincampos.tipcalculator
+package me.kevincampos.tipcalculator.view
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
+import me.kevincampos.tipcalculator.R
 
 class MainActivity : AppCompatActivity() {
 
