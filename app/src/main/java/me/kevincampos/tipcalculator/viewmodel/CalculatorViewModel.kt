@@ -1,6 +1,8 @@
 package me.kevincampos.tipcalculator.viewmodel
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Transformations
 import me.kevincampos.tipcalculator.R
 import me.kevincampos.tipcalculator.model.Calculator
 import me.kevincampos.tipcalculator.model.RestaurantCalculator
@@ -44,6 +46,28 @@ class CalculatorViewModel @JvmOverloads constructor(
 
         if (checkAmount != null && tipPercentage != null) {
             val tipCalculation = calculator.calculateTip(checkAmount, tipPercentage)
+            updateOutputs(tipCalculation)
+        }
+    }
+
+    fun loadSavedTipCalculationSummaries(): LiveData<List<TipCalculationSummaryItem>> {
+        return Transformations.map(calculator.loadSavedTipCalculations(), { tipCalculationObjects ->
+            tipCalculationObjects.map {
+                TipCalculationSummaryItem(
+                    it.locationName,
+                    getApplication<Application>().getString(R.string.dollar_format, it.grandTotal)
+                )
+            }
+        })
+    }
+
+    fun loadTipCalculation(locationName: String) {
+        val tipCalculation = calculator.loadTipCalculationByName(locationName)
+
+        if (tipCalculation != null) {
+            inputCheckAmount = tipCalculation.checkAmount.toString()
+            inputTipPercentage = tipCalculation.tipPercent.toString()
+
             updateOutputs(tipCalculation)
         }
     }

@@ -9,7 +9,7 @@ interface Calculator {
 
     fun saveTipCalculation(tipCalculation: TipCalculation)
 
-    fun loadTipCalculationByName(locationName: String)
+    fun loadTipCalculationByName(locationName: String): TipCalculation?
 
     fun loadSavedTipCalculations(): LiveData<List<TipCalculation>>
 
@@ -37,8 +37,8 @@ class RestaurantCalculator(private val repository: TipCalculationRepository = Ti
         repository.saveTipCalculation(tipCalculation)
     }
 
-    override fun loadTipCalculationByName(locationName: String) {
-        repository.loadTipCalculationByName(locationName)
+    override fun loadTipCalculationByName(locationName: String): TipCalculation? {
+        return repository.loadTipCalculationByName(locationName)
     }
 
     override fun loadSavedTipCalculations(): LiveData<List<TipCalculation>> {

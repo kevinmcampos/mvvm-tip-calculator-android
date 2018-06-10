@@ -12,7 +12,7 @@ import me.kevincampos.tipcalculator.R
 import me.kevincampos.tipcalculator.databinding.ActivityMainBinding
 import me.kevincampos.tipcalculator.viewmodel.CalculatorViewModel
 
-class MainActivity : AppCompatActivity(), SaveDialogFragment.SaveCallback {
+class MainActivity : AppCompatActivity(), SaveDialogFragment.SaveCallback, LoadDialogFragment.LoadCallback {
 
     lateinit var dataBinding: ActivityMainBinding
 
@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity(), SaveDialogFragment.SaveCallback {
                 showSaveDialog()
                 return true
             }
+            R.id.action_load -> {
+                showLoadDialog()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -45,8 +49,18 @@ class MainActivity : AppCompatActivity(), SaveDialogFragment.SaveCallback {
         Snackbar.make(dataBinding.root, "Saved $locationName", Snackbar.LENGTH_SHORT).show()
     }
 
+    override fun onLoad(locationName: String) {
+        dataBinding.vm?.loadTipCalculation(locationName)
+        Snackbar.make(dataBinding.root, "Loaded $locationName", Snackbar.LENGTH_SHORT).show()
+    }
+
     private fun showSaveDialog() {
         val dialog = SaveDialogFragment()
         dialog.show(supportFragmentManager, "SaveDialogFragment")
+    }
+
+    private fun showLoadDialog() {
+        val dialog = LoadDialogFragment()
+        dialog.show(supportFragmentManager, "LoadDialogFragment")
     }
 }
