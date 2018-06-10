@@ -4,7 +4,15 @@ import android.arch.lifecycle.LiveData
 import java.math.RoundingMode
 
 interface Calculator {
+
     fun calculateTip(checkAmount: Double, tipPercent: Int): TipCalculation
+
+    fun saveTipCalculation(tipCalculation: TipCalculation)
+
+    fun loadTipCalculationByName(locationName: String)
+
+    fun loadSavedTipCalculations(): LiveData<List<TipCalculation>>
+
 }
 
 class RestaurantCalculator(private val repository: TipCalculationRepository = TipCalculationRepository()) : Calculator {
@@ -25,15 +33,15 @@ class RestaurantCalculator(private val repository: TipCalculationRepository = Ti
         )
     }
 
-    fun saveTipCalculation(tipCalculation: TipCalculation) {
+    override fun saveTipCalculation(tipCalculation: TipCalculation) {
         repository.saveTipCalculation(tipCalculation)
     }
 
-    fun loadTipCalculationByName(locationName: String) {
+    override fun loadTipCalculationByName(locationName: String) {
         repository.loadTipCalculationByName(locationName)
     }
 
-    fun loadSavedTipCalculations(): LiveData<List<TipCalculation>> {
+    override fun loadSavedTipCalculations(): LiveData<List<TipCalculation>> {
         return repository.loadSavedTipCalculations()
     }
 
